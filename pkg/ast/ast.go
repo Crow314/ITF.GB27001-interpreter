@@ -6,6 +6,7 @@ type OpType int
 const (
 	TBinExpr = AstType(iota)
 	TInt
+	TSeq
 )
 
 const (
@@ -37,6 +38,11 @@ type MBinExpr struct {
 type MInt struct {
 	MExpr
 	Value int
+}
+
+type MSeq struct {
+	MExpr
+	Sequence []MExpr
 }
 
 func (expr *MExpr) Type() AstType {

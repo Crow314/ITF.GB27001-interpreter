@@ -18,6 +18,15 @@ func Evaluate(expr IExpr) IExpr {
 		case TDiv:
 			return new(MInt).Init(Evaluate(binExpr.Lhs).(*MInt).Value / Evaluate(binExpr.Rhs).(*MInt).Value)
 		}
+	} else if expr.Type() == TSeq {
+		seq := expr.(*MSeq).Sequence
+		var e *MExpr
+
+		for _, *e = range seq {
+			Evaluate(e)
+		}
+
+		return e
 	} else if expr.Type() == TInt {
 		return expr
 	}
