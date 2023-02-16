@@ -1,27 +1,24 @@
 package ast
 
 func Evaluate(expr IExpr) IExpr {
-	if binExpr, ok := expr.(*MBinExpr); ok {
+	if expr.Type() == TBinExpr {
+		binExpr := expr.(*MBinExpr)
 		op := binExpr.Op
 
 		switch op {
 		case TAdd:
-			res := new(MInt).Init(Evaluate(binExpr.Lhs).(*MInt).Value + Evaluate(binExpr.Rhs).(*MInt).Value)
-			return &res
+			return new(MInt).Init(Evaluate(binExpr.Lhs).(*MInt).Value + Evaluate(binExpr.Rhs).(*MInt).Value)
 
 		case TSub:
-			res := new(MInt).Init(Evaluate(binExpr.Lhs).(*MInt).Value - Evaluate(binExpr.Rhs).(*MInt).Value)
-			return &res
+			return new(MInt).Init(Evaluate(binExpr.Lhs).(*MInt).Value - Evaluate(binExpr.Rhs).(*MInt).Value)
 
 		case TMul:
-			res := new(MInt).Init(Evaluate(binExpr.Lhs).(*MInt).Value * Evaluate(binExpr.Rhs).(*MInt).Value)
-			return &res
+			return new(MInt).Init(Evaluate(binExpr.Lhs).(*MInt).Value * Evaluate(binExpr.Rhs).(*MInt).Value)
 
 		case TDiv:
-			res := new(MInt).Init(Evaluate(binExpr.Lhs).(*MInt).Value / Evaluate(binExpr.Rhs).(*MInt).Value)
-			return &res
+			return new(MInt).Init(Evaluate(binExpr.Lhs).(*MInt).Value / Evaluate(binExpr.Rhs).(*MInt).Value)
 		}
-	} else if _, ok := expr.(*MInt); ok {
+	} else if expr.Type() == TInt {
 		return expr
 	}
 

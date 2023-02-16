@@ -47,18 +47,18 @@ func (expr *MExpr) SetType(astType AstType) {
 	expr.AstType = astType
 }
 
-func (expr *MBinExpr) Init(op OpType, lhs IExpr, rhs IExpr) MBinExpr {
+func (expr *MBinExpr) Init(op OpType, lhs IExpr, rhs IExpr) *MBinExpr {
 	expr.SetType(TBinExpr)
 	expr.Op = op
 	expr.Lhs = lhs
 	expr.Rhs = rhs
 
-	return *expr
+	return expr
 }
 
-func (expr *MInt) Init(value int) MInt {
+func (expr *MInt) Init(value int) *MInt {
 	expr.SetType(TInt)
 	expr.Value = value
 
-	return *expr
+	return expr
 }
