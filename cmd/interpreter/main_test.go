@@ -4,6 +4,8 @@ import "testing"
 import "github.com/Crow314/ITF.GB27001-interpreter/pkg/ast"
 
 func TestAdd(t *testing.T) {
+	env := make(map[string]*ast.MExpr, 0)
+
 	expr := new(ast.MBinExpr)
 	lhs := new(ast.MInt)
 	rhs := new(ast.MInt)
@@ -12,7 +14,7 @@ func TestAdd(t *testing.T) {
 	rhs.Init(7)
 	expr.Init(ast.TAdd, lhs, rhs)
 
-	res := ast.Evaluate(expr).(*ast.MInt)
+	res := ast.Evaluate(expr, env).(*ast.MInt)
 
 	if res.Type() != ast.TInt {
 		t.Errorf("Result is not TInt")
@@ -24,6 +26,8 @@ func TestAdd(t *testing.T) {
 }
 
 func TestSub(t *testing.T) {
+	env := make(map[string]*ast.MExpr, 0)
+
 	expr := new(ast.MBinExpr)
 	lhs := new(ast.MInt)
 	rhs := new(ast.MInt)
@@ -32,7 +36,7 @@ func TestSub(t *testing.T) {
 	rhs.Init(9)
 	expr.Init(ast.TSub, lhs, rhs)
 
-	res := ast.Evaluate(expr).(*ast.MInt)
+	res := ast.Evaluate(expr, env).(*ast.MInt)
 
 	if res.Type() != ast.TInt {
 		t.Errorf("Result is not TInt")
@@ -44,6 +48,8 @@ func TestSub(t *testing.T) {
 }
 
 func TestMul(t *testing.T) {
+	env := make(map[string]*ast.MExpr, 0)
+
 	expr := new(ast.MBinExpr)
 	lhs := new(ast.MInt)
 	rhs := new(ast.MInt)
@@ -52,7 +58,7 @@ func TestMul(t *testing.T) {
 	rhs.Init(12)
 	expr.Init(ast.TMul, lhs, rhs)
 
-	res := ast.Evaluate(expr).(*ast.MInt)
+	res := ast.Evaluate(expr, env).(*ast.MInt)
 
 	if res.Type() != ast.TInt {
 		t.Errorf("Result is not TInt")
@@ -64,6 +70,8 @@ func TestMul(t *testing.T) {
 }
 
 func TestDiv(t *testing.T) {
+	env := make(map[string]*ast.MExpr, 0)
+
 	expr := new(ast.MBinExpr)
 	lhs := new(ast.MInt)
 	rhs := new(ast.MInt)
@@ -72,7 +80,7 @@ func TestDiv(t *testing.T) {
 	rhs.Init(10)
 	expr.Init(ast.TDiv, lhs, rhs)
 
-	res := ast.Evaluate(expr).(*ast.MInt)
+	res := ast.Evaluate(expr, env).(*ast.MInt)
 
 	if res.Type() != ast.TInt {
 		t.Errorf("Result is not TInt")
