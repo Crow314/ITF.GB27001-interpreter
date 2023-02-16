@@ -7,6 +7,8 @@ const (
 	TBinExpr = AstType(iota)
 	TInt
 	TSeq
+	TAssign
+	TIdent
 )
 
 const (
@@ -42,7 +44,18 @@ type MInt struct {
 
 type MSeq struct {
 	MExpr
-	Sequence []MExpr
+	Sequence []IExpr
+}
+
+type MAssign struct {
+	MExpr
+	Name  string
+	Value IExpr
+}
+
+type MIdent struct {
+	MExpr
+	Name string
 }
 
 func (expr *MExpr) Type() AstType {
@@ -65,6 +78,21 @@ func (expr *MBinExpr) Init(op OpType, lhs IExpr, rhs IExpr) *MBinExpr {
 func (expr *MInt) Init(value int) *MInt {
 	expr.SetType(TInt)
 	expr.Value = value
+
+	return expr
+}
+
+func (expr *MAssign) Init(name string, value IExpr) *MAssign {
+	expr.SetType(TAssign)
+	expr.Name = name
+	expr.Value = value.(*MInt)
+
+	return expr
+}
+
+func (expr *MIdent) Init(name string) *MIdent {
+	expr.SetType(TIdent)
+	expr.Name = name
 
 	return expr
 }

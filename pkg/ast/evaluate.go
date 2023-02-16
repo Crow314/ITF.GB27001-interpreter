@@ -1,6 +1,6 @@
 package ast
 
-func Evaluate(expr IExpr, env map[string]*MExpr) IExpr {
+func Evaluate(expr IExpr, env map[string]*IExpr) IExpr {
 	if expr.Type() == TBinExpr {
 		binExpr := expr.(*MBinExpr)
 		op := binExpr.Op
@@ -20,15 +20,24 @@ func Evaluate(expr IExpr, env map[string]*MExpr) IExpr {
 		}
 	} else if expr.Type() == TSeq {
 		seq := expr.(*MSeq).Sequence
-		var e *MExpr
+		var e IExpr
 
-		for _, *e = range seq {
+		for _, e = range seq {
 			Evaluate(e, env)
 		}
 
 		return e
 	} else if expr.Type() == TInt {
 		return expr
+	} else if expr.Type() == TAssign {
+		mAssign := expr.(*MAssign)
+		env[mAssign.Name] = &mAssign.Value
+
+		return expr
+	} else if expr.Type() == TIdent {
+		mIdent := expr.(*MIdent)
+
+		return *env[mIdent.Name]
 	}
 
 	panic("Unexpected Error")

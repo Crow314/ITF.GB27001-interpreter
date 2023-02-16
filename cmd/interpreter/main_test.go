@@ -4,7 +4,7 @@ import "testing"
 import "github.com/Crow314/ITF.GB27001-interpreter/pkg/ast"
 
 func TestAdd(t *testing.T) {
-	env := make(map[string]*ast.MExpr, 0)
+	env := make(map[string]*ast.IExpr, 0)
 
 	expr := new(ast.MBinExpr)
 	lhs := new(ast.MInt)
@@ -26,7 +26,7 @@ func TestAdd(t *testing.T) {
 }
 
 func TestSub(t *testing.T) {
-	env := make(map[string]*ast.MExpr, 0)
+	env := make(map[string]*ast.IExpr, 0)
 
 	expr := new(ast.MBinExpr)
 	lhs := new(ast.MInt)
@@ -48,7 +48,7 @@ func TestSub(t *testing.T) {
 }
 
 func TestMul(t *testing.T) {
-	env := make(map[string]*ast.MExpr, 0)
+	env := make(map[string]*ast.IExpr, 0)
 
 	expr := new(ast.MBinExpr)
 	lhs := new(ast.MInt)
@@ -70,7 +70,7 @@ func TestMul(t *testing.T) {
 }
 
 func TestDiv(t *testing.T) {
-	env := make(map[string]*ast.MExpr, 0)
+	env := make(map[string]*ast.IExpr, 0)
 
 	expr := new(ast.MBinExpr)
 	lhs := new(ast.MInt)
@@ -88,5 +88,26 @@ func TestDiv(t *testing.T) {
 
 	if res.Value != 10 {
 		t.Errorf("100 / 10\nExpected: 10\nResult: %d", res.Value)
+	}
+}
+
+func TestAssign(t *testing.T) {
+	env := make(map[string]*ast.IExpr)
+
+	expr := new(ast.MAssign)
+	val := new(ast.MInt)
+
+	val.Init(334)
+	expr.Init("hoge", val)
+
+	_ = ast.Evaluate(expr, env)
+
+	varExpr := env["hoge"]
+	if (*varExpr).Type() != ast.TInt {
+		t.Errorf("Result is not TInt")
+	}
+
+	if (*varExpr).(*ast.MInt).Value != 334 {
+		t.Errorf("hoge has illegal value\nExpected: 334\nResult: %d", (*varExpr).(*ast.MInt).Value)
 	}
 }
